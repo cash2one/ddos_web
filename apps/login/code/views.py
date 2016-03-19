@@ -1,36 +1,36 @@
-# -*- coding: utf-8 -*-
-from models import get_users
-from tornado import gen
-import tornado.web
-import json
-from libs import log
 from libs.base_handler import BaseHandler
+import hashlib
+import tornado
 
 class LoginHandler(BaseHandler):
-    @gen.coroutine
     def get(self):
-        # users = get_users()
-        # self.write(json.dumps(users))
-        log.debug("testt")
-        self.render('../apps/login/templates/login.html')
+        self.render("../apps/login/templates/login.html",error="")
+
+    @tornado.gen.coroutine
     def post(self):
-        # users = get_users()
-        # self.write(json.dumps(users))
-        # log.debug(self.request)
-        # log.debug(self.request.body)
-        # log.debug(self.get_argument("userName"))
+        name = self.get_argument("loginname")
+        passwd = self.get_argument("logpasswd")
 
-        self.set_secure_cookie("user", self.get_argument("userName"))
-        # print self.request
-        # self.render('../apps/login/templates/login.html')
+        uri = "/login"
+        method = "POST"
+        args = {
+            "name":name,
+            "passwd":passwd,
+        }
+
+        res = self.get_api_result(uri, method, args)
+        if res.get("code") != 0:
+            self.render("../apps/login/templates/login.html",error="%s" % res.get("msg"))
+            return
+
+        self.set_secure_cookie("user", self.get_argument("loginname"),expires_days=1)
         self.redirect("/")
-
-
+        
 class LoginOut(BaseHandler):
     def get(self):
         self.set_secure_cookie("user", "",expires_days=1)
-        self.render("/login/",error="")
+        self.redirect("/login")
     
     def post(self):
         self.set_secure_cookie("user", "",expires_days=1)
-        self.render("/login/",error="Password Error")
+        self.redirect("/login")

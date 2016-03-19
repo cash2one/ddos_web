@@ -8,12 +8,6 @@ from libs import log
 from libs.base_handler import BaseHandler
 
 class IndexHandler(BaseHandler):
-    @gen.coroutine
+    @tornado.web.authenticated
     def get(self):
-        # if not self.current_user:
-        #     self.redirect("/login/")
-        #     return
-        # users = get_users()
-        # self.write(json.dumps(users))
-        log.debug(self.current_user)
-        self.render('../apps/index/templates/index.html')
+        self.render('../apps/index/templates/index.html',name = self.user_name)

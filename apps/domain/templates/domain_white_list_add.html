@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block domain_active_open %}
+class="active open"
+{% end %}
+
+{% block white_domain_action %}
+class="active"
+{% end %}
+
+{% block head_tree %}
+<li>
+	<a href="#">域名管理</a>
+</li>
+<li class="active">
+	域名白名单
+</li>
+{% end %}
+
+{% block page_content %}
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-6">
+			<table class="table">
+				<tr>
+					<td><a href="domain_white_list?type=0&page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}" class="btn btn-primary">域名白名单</a></td>
+					<td><a href="domain_white_list_add?page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}" class="btn btn-primary">添加</a></td>
+				</tr>
+			</table>
+		</div><!-- /.page-header -->
+	</div>
+	<div class="row">
+		<div class="col-xs-8">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<form method="post" action="/domain_white_list_add?page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}">
+				<table class="table table-condensed table-hover">
+					<tr>
+						<td>域名：</td>
+						<td>
+						<input type="hidden" name="id" value="{{entries[0]['id']}}" />
+						<input type="text" name="domain" value="{{entries[0]['domain']}}" required>
+						</td>
+
+					</tr>
+					
+				</table>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary">
+						确定
+					</button>
+				</div>
+
+			</form>
+
+			<!-- PAGE CONTENT ENDS -->
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+{% end %}
+

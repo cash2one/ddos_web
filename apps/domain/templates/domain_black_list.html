@@ -1,0 +1,159 @@
+{% extends "ace_base/main_base.html" %}
+
+{% block domain_active_open %}
+class="active open"
+{% end %}
+
+{% block black_domain_action %}
+class="active"
+{% end %}
+
+{% block head_tree %}
+<li>
+	<a href="#">域名管理</a>
+</li>
+<li class="active">
+	域名黑名单
+</li>
+{% end %}
+
+{% block page_content %}
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-9">
+			<form method="get" action="/domain_black_list_search">
+				<table class="table">
+
+					<tr>
+						<td><a href="domain_black_list?page=1&search_sip=&search_dip=" class="btn btn-primary">域名黑名单</a></td>
+						<td><a href="domain_black_list_add?page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}" class="btn btn-primary">添加</a></td>
+						<!-- <td><a href="#" class="btn btn-primary">导入</a></td> -->
+						<!-- <td><a href="#" class="btn btn-primary">导出</a></td> -->
+						<td><strong>域名</strong></td>
+						<td>
+						<input class="form-control" type="text" id="search_sip" name="search_sip" value="{{search_sip}}"/>
+						<input type="hidden" value="1" name="page" />
+						<input type="hidden" value="" name="search_dip" />
+						</td>
+						<td>
+						<input class="btn btn-primary" type="submit" value="查询" />
+						</td>
+
+					</tr>
+				</table>
+			</form>
+		</div><!-- /.page-header -->
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="table-responsive">
+						<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>域名</th>
+									<th>创建者</th>
+									<th>创建时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% set  c = 0 %}
+								{% for entrie in entries %}
+								<tr>
+									<td>{{c = c + 1}}</td>
+									<td><a href="http://{{entrie["domain"]}}" target="_blank">{{entrie["domain"]}}</a></td>
+									<td>{{entrie["whoadd"]}}</td>
+									<td>{{entrie["time"]}}</td>
+									<td><a href="javascript:del('{{entrie["id"]}}','{{page}}','{{search_sip}}','{{search_dip}}')">[删除]</a></td>
+								</tr>
+								{% end %}
+
+								{% if len(entries) == 0 %}
+								<tr>
+									<td colspan="15" align="center">暂无数据</td>
+								</tr>
+								{% end %}
+
+							</tbody>
+						</table>
+
+						<ul class="pager">
+							<li>
+								<a>第{{page}}页 共<span id="count">{{count}}</span>页</a>
+							</li>
+							<li>
+								<a href="javascript:up_page('{{page}}','{{search_sip}}','{{search_dip}}')" >上一页</a>
+							</li>
+							<li>
+								<a href="javascript:goto_page('{{page}}','{{search_sip}}','{{search_dip}}')" >下一页</a>
+							</li>
+						</ul>
+					</div><!-- /.table-responsive -->
+				</div><!-- /span -->
+			</div><!-- /row -->
+
+			<!-- PAGE CONTENT ENDS -->
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+{% end %}
+
+{% block ln_js_body %}
+
+<script type="text/javascript">
+	function goto_page(p, sip, dip) {
+		var c = $("#count").html();
+		var pint = parseInt(p);
+		if (pint >= c) {
+			alert("已经是最后一页");
+		} else {
+			pint = pint + 1;
+			var action = "/domain_black_list?page=" + pint + "&type=0" + "&search_sip=" + sip + "&search_dip=" + dip;
+			location.href = action;
+		}
+	}
+
+	function up_page(p, sip, dip) {
+		var c = $("#count").html();
+		p = p - 1;
+		if (p <= 0) {
+			alert("已经是第一页");
+		} else {
+			var action = "/domain_black_list?page=" + p + "&type=0" + "&search_sip=" + sip + "&search_dip=" + dip;
+			location.href = action;
+		}
+	}
+
+	function del(id, page, sip, dip) {
+		var action = "/domain_black_list_del?id=" + id + "&page=" + page + "&search_sip=" + sip + "&search_dip=" + dip;
+		location.href = action;
+	}
+
+	function edit(id, page, sip, dip) {
+		var action = "/domain_black_list_add?id=" + id + "&page=" + page + "&search_sip=" + sip + "&search_dip=" + dip;
+		location.href = action;
+	}
+
+	function block(id, page, sip, dip) {
+		var action = "/domain_black_list?id=" + id + "&type=1&page=" + page + "&search_sip=" + sip + "&search_dip=" + dip;
+		location.href = action;
+	}
+
+	function unblock(id, page, sip, dip) {
+		var action = "/domain_black_list?id=" + id + "&type=2&page=" + page + "&search_sip=" + sip + "&search_dip=" + dip;
+		location.href = action;
+	}
+
+	function check(id, page, sip, dip) {
+		var action = "/domain_black_list?id=" + id + "&type=3&page=" + page + "&search_sip=" + sip + "&search_dip=" + dip;
+		location.href = action;
+	}
+</script>
+
+{% end %}

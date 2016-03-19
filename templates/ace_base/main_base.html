@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>智能防火墙——数据通信科学技术研究所</title>
+		<meta name="keywords" content="智能防火墙" />
+		<meta name="description" content="智能防火墙" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		{% block ln_css %}{% end %}
+
+		<link rel="stylesheet" href="{{ static_url("css/bootstrap.min.css")}}" />
+		<link rel="stylesheet" href="{{ static_url("font-awesome/4.2.0/css/font-awesome.min.css")}}" />
+		<link rel="stylesheet" href="{{ static_url("fonts/fonts.googleapis.com.css")}}" />
+		<link rel="stylesheet" href="{{ static_url("css/ace.min.css")}}" class="ace-main-stylesheet" id="main-ace-style" />
+		<script src="{{ static_url("js/ace-extra.min.js")}}"></script>
+		{% block ln_js %}{% end %}
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch(e) {
+				}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand"> <small> <i class="fa fa-cloud"></i>智能防火墙——数据通信科学技术研究所</small> </a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<!-- <li class="grey">
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-tasks"></i> <span class="badge badge-grey">4</span> </a>
+
+						<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-header">
+						<i class="ace-icon fa fa-check"></i>
+						4 Tasks to complete
+						</li>
+
+						<li class="dropdown-footer">
+						<a href="#"> See tasks with details <i class="ace-icon fa fa-arrow-right"></i> </a>
+						</li>
+						</ul>
+						</li> -->
+
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-bell icon-animated-bell"></i> <!-- <span class="badge badge-important">3</span> --> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-exclamation-triangle"></i>
+									攻击警报
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="log_ddos?page=1&search_sip=&search_dip="> 查看所有攻击日志 <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-envelope icon-animated-vertical"></i> <!-- <span class="badge badge-success">2</span> --> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									系统消息
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="log_system?page=1&search_sip=&search_dip="> 查看所有系统日志 <i class="dropdown-footer"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle"> <img class="nav-user-photo" src="{{ static_url('avatars/user.jpg') }}" alt="Jason's Photo" /> <span class="user-info"> <small>欢迎,</small> {{name}} </span> <i class="ace-icon fa fa-caret-down"></i> </a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="system_config?page=1&search_sip=&search_dip=&flag=0"> <i class="ace-icon fa fa-cog"></i> 系统配置 </a>
+								</li>
+
+								<li>
+									<a href="user?page=1&search_sip=&search_dip="> <i class="ace-icon fa fa-user"></i> 账号管理 </a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="/login/logout"> <i class="ace-icon fa fa-power-off"></i> 退出系统 </a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch(e) {
+				}
+			</script>
+
+			<div id="sidebar" class="sidebar                  responsive">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch(e) {
+					}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+
+						<a href="server_list" title="服务器列表" class="btn btn-success"> <i class="ace-icon fa fa-signal"></i> </a>
+						<a href="rule_cbps?page=1&search_sip=&search_dip="  title="查看规则" class="btn btn-info"> <i class="ace-icon fa fa-pencil"></i> </a>
+						<a href="system_config?page=1&search_sip=&search_dip=&flag=0"  title="集群管理" class="btn btn-warning"> <i class="ace-icon fa fa-users"></i> </a>
+						<a href="pro_sys_conf?page=1&search_sip=&search_dip="  title="系统设置" class="btn btn-danger"> <i class="ace-icon fa fa-cogs"></i> </a>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div><!-- #sidebar-shortcuts -->
+
+				<ul class="nav nav-list">
+					<li {% block index_action %}{% end %} >
+						<a href="/"> <i class="menu-icon fa fa-tachometer"></i> <span class="menu-text"> 首页 </span> </a>
+						<b class="arrow"></b>
+					</li>
+
+					<li {% block state_active_open %}{% end %} >
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-desktop"></i> <span class="menu-text">状态监控</span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block server_list_action %}{% end %}>
+								<a href="server_list"> <i class="menu-icon fa fa-caret-right"></i> 服务器列表 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block session_list_action %}{% end %} >
+								<a href="server_session_list"> <i class="menu-icon fa fa-caret-right"></i> 连接监控 </a>
+								<b class="arrow"></b>
+							</li>
+
+							<li {% block black_list_action %}{% end %}>
+								<a href="server_black_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 黑名单列表 </a>
+								<b class="arrow"></b>
+							</li>
+
+							<li {% block white_list_action %}{% end %}>
+								<a href="server_white_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 白名单列表 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<li {% block qianying_active_open %}{% end %}>
+					<li {% block qianying_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-exchange"></i> <span class="menu-text"> 流量牵引 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block router_list_action %}{% end %}>
+								<a href="router_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 路由宣告列表 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block black_router_action %}{% end %}>
+								<a href="router_black_router?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 黑洞路由 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block router_rule_action %}{% end %}>
+								<a href="router_black_rule?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 黑洞路由策略 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block router_conf_action %}{% end %}>
+								<a href="router_conf?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 路由器操作配置 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block router_log_action %}{% end %}>
+								<a href="router_log?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 黑洞日志 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<li {% block rule_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-arrow-circle-o-down"></i> <span class="menu-text"> 规则 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block acl_rule_action %}{% end %}>
+								<a href="rule_acl?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> ACL规则 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block pro_rule_action %}{% end %}>
+								<a href="rule_pro?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 防护规则 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block bps_rule_action %}{% end %}>
+								<a href="rule_cbps?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 服务器规则 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block pass_rule_action %}{% end %}>
+								<a href="rule_pass?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 直通规则 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block login_rule_action %}{% end %}>
+								<a href="rule_login?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 登陆规则 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li {% block domain_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-globe"></i> <span class="menu-text"> 域名管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block black_domain_action %}{% end %}>
+								<a href="domain_black_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 域名黑名单 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block white_domain_action %}{% end %}>
+								<a href="domain_white_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 域名白名单 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block domain_conf_action %}{% end %}>
+								<a href="domain_conf?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 域名过滤设置 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li {% block system_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-cogs"></i> <span class="menu-text"> 系统配置 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block system_config_action %}{% end %}>
+								<a href="system_config?page=1&search_sip=&search_dip=&flag=0"> <i class="menu-icon fa fa-caret-right"></i> 设备管理 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block pro_conf_action %}{% end %}>
+								<a href="pro_sys_conf?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 防护参数 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block pro_num_action %}{% end %}>
+								<a href="pro_num_conf?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 告警阈值参数 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block pro_email_action %}{% end %}>
+								<a href="pro_email_conf?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 告警邮箱设置 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<li {% block log_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-calendar"></i> <span class="menu-text"> 日志 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block ddos_log_action %}{% end %}>
+								<a href="log_ddos?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 攻击日志 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block flows_log_action %}{% end %}>
+								<a href="log_flows?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 流量日志 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block opt_log_action %}{% end %}>
+								<a href="log_opt?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 操作日志 </a>
+								<b class="arrow"></b>
+							</li>
+							<!-- <li {% block sys_log_action %}{% end %}>
+								<a href="log_system?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 设备状态日志 </a>
+								<b class="arrow"></b>
+							</li> -->
+							<li {% block login_log_action %}{% end %}>
+								<a href="log_login?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 登陆日志 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li {% block user_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-users"></i> <span class="menu-text"> 用户管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block user_list_action %}{% end %}>
+								<a href="user?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 用户列表 </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block group_list_action %}{% end %}>
+								<a href="user_group?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 用户组列表 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<!-- <li {% block ping_active_open %}{% end %}>
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-bar-chart-o"></i> <span class="menu-text"> 网络诊断工具 </span> <b class="arrow fa fa-angle-down"></b> </a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li {% block ping_action %}{% end %}>
+								<a href="tool_ping"> <i class="menu-icon fa fa-caret-right"></i> ping </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block traceroute_action %}{% end %}>
+								<a href="tool_traceroute"> <i class="menu-icon fa fa-caret-right"></i> traceroute </a>
+								<b class="arrow"></b>
+							</li>
+							<li {% block tcpdump_action %}{% end %}>
+								<a href="tool_tcpdump"> <i class="menu-icon fa fa-caret-right"></i> 抓包 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li> -->
+				</ul><!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch(e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try {
+								ace.settings.check('breadcrumbs', 'fixed')
+							} catch(e) {
+							}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+							<!-- <li>
+							<a href="#">Other Pages</a>
+							</li>
+							<li class="active">Blank Page</li> -->
+							{% block head_tree %}{% end %}
+
+						</ul><!-- .breadcrumb -->
+
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								{% block page_content %}{% end %}
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120"><a class="blue bolder" target="_blank" href="http://www.chinawllc.com">北京通和实益电信科学技术研究所有限公司</a> Application &copy; 2016 </span>
+					</div>
+				</div>
+			</div>
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i> </a>
+		</div><!-- /.main-container -->
+
+		<script src="{{ static_url('js/jquery.2.1.1.min.js') }}"></script>
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='{{ static_url('js/jquery.min.js')}}'>" + "<" + "/script>");
+		</script>
+		<script type="text/javascript">
+			if ('ontouchstart' in document.documentElement)
+				document.write("<script src='{{ static_url('js/jquery.mobile.custom.min.js') }}'>" + "<" + "/script>");
+		</script>
+
+		<script src="{{ static_url("js/bootstrap.min.js") }}"></script>
+
+		<!-- page specific plugin scripts -->
+		{% block plugin_scripts %}{% end %}
+		<!-- ace scripts -->
+
+		<script src="{{ static_url("js/ace-elements.min.js") }}"></script>
+		<script src="{{ static_url("js/ace.min.js") }}"></script>
+		{% block ln_js_body %}{% end %}
+
+		<!-- inline scripts related to this page -->
+	</body>
+</html>

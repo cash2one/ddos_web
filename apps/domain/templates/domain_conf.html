@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block domain_active_open %}
+class="active open"
+{% end %}
+
+{% block domain_conf_action %}
+class="active"
+{% end %}
+
+{% block head_tree %}
+<li>
+	<a href="#">域名管理</a>
+</li>
+<li class="active">
+	域名过滤设置
+</li>
+{% end %}
+
+{% block page_content %}
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-6">
+			<table class="table">
+				<tr>
+					<td><a href="domain_conf?type=0&page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}" class="btn btn-primary">域名过滤设置</a></td>
+				</tr>
+			</table>
+		</div><!-- /.page-header -->
+	</div>
+	<div class="row">
+		<div class="col-xs-8">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<form method="post" action="/domain_conf?page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}">
+				<table class="table table-condensed table-hover">
+					<tr>
+						<td>阻断提示信息：</td>
+						<td>
+						<input type="hidden" name="id" value="{{entries[0]['id']}}" />
+						<textarea class="autosize-transition form-control" name="block_prompt" >{{entries[0]['block_prompt']}}</textarea>
+
+						</td>
+
+					</tr>
+					<tr>
+						<td>阻断信息是否生效：</td>
+						<td>
+						<input type="checkbox" name="prompt_enable"  {% if entries[0]['prompt_enable'] == 'on' %} checked="checked" {% end %}>
+						</td>
+					</tr>
+					<tr>
+						<td>黑名单模式：</td>
+						<td>
+						<input type="radio" name="match_mode"  value = "black" {% if entries[0]['match_mode'] == 'black' %} checked="checked" {% end %}>
+						</td>
+					</tr>
+					<tr>
+						<td>白名单模式：</td>
+						<td>
+						<input type="radio" name="match_mode" value = "white" {% if entries[0]['match_mode'] == 'white' %} checked="checked" {% end %}>
+						</td>
+
+					</tr>
+				</table>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary">
+						确定
+					</button>
+				</div>
+
+			</form>
+
+			<!-- PAGE CONTENT ENDS -->
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+{% end %}
+
+{% block ln_js_body %}
+<!-- <script type="text/javascript">
+
+$(document).ready(function(){
+	$('#prompt_enable').on('click',function(){
+		var isChecked = $(this).is(':checked');
+		console.log(isChecked);
+		if(isChecked == true){
+			$(this).val(1);
+		}else{
+			$(this).val(2);
+		}
+		console.log($(this).val());
+	});
+});
+
+</script>  -->
+        
+{% end %}
+
