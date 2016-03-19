@@ -6,16 +6,29 @@ import tornado
 class domain_black_listHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        p = int(self.get_argument("page", "1"))
-        # qx = quanxian(self,name,"get",16)
-        # if qx.get_limits():
-        #     return
-        name = "test"
+        page = int(self.get_argument("page", "1"))
+        per_page = int(self.get_argument("per_page", "10"))
         search_sip = self.get_argument("search_sip","")
         search_dip = self.get_argument("search_dip","")
+
+        uri = "/domain/black_list"
+        args = {
+                "condition":{
+                        "sip":search_sip,
+                        "dip":search_dip,
+                        "page":page,
+                        "per_page":per_page
+                }
+        }
+
+        res = self.get_api_result(uri, method, args)
+        if res.get("code") != 0:
+            self.render("errors.html",error="%s" % res.get("msg"))
+            return
+
         sums = 0
         entries = []
-        self.render("../apps/domain/templates/domain_black_list.html", entries=entries,page = p,count=sums,search_sip=search_sip,search_dip=search_dip)
+        self.render("../apps/domain/templates/domain_black_list.html", entries=entries,page = page,count=sums,search_sip=search_sip,search_dip=search_dip)
         
 # class domain_black_listsearchHandler(BaseHandler):
 #     def get(self):

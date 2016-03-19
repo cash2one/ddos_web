@@ -49,7 +49,7 @@ class RealBaseHandler(tornado.web.RequestHandler):
         # print locals()
         # print [(name, getattr(self, name)) for name in dir(self)]
         # print vars(self)
-        print self.__module__
+        # print self.__module__
         super(RealBaseHandler,self).render(template_name,**kwargs)
 
 class DebugBaseHandler(RealBaseHandler):
