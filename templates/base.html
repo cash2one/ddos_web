@@ -1,0 +1,23 @@
+{% block doc %}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% end %}>
+{% block html %}
+  <head>
+    {% block head %}
+        <title>{% block title %}{{title|default}}{% end %}</title>
+        {% block metas %}{% end %}
+        {% block styles %}{% end %}
+        {% block compatible %}{% end %} 
+    {% end %}
+  </head>
+  <body{% block body_attribs %}{% end %}>
+    {% block body %}
+        {% block body_header %}{% end %}
+        {% block navbar %}{% end %}
+        {% block content %}{% end %}
+        {% block scripts %}{% end %}
+    {% end %}
+  </body>
+{% end %}
+</html>
+{% end %}
