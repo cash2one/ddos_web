@@ -1,0 +1,34 @@
+{
+    "code":0,
+    "data":{
+        "month_detail":[
+            {
+                "time_field":"0",
+                "ave_tx":"1999",
+                "ave_rx":"98889",
+                "max_tx":"10002",
+                "max_rx":"44422",
+                "min_tx":"88",
+                "min_rx":"44"
+            },
+            {
+                "time_field":"1",
+                "ave_tx":"1999",
+                "ave_rx":"98889",
+                "max_tx":"10002",
+                "max_rx":"44422",
+                "min_tx":"88",
+                "min_rx":"44"
+            },
+            {
+                "time_field":"2",
+                "ave_tx":"1999",
+                "ave_rx":"98889",
+                "max_tx":"10002",
+                "max_rx":"44422",
+                "min_tx":"88",
+                "min_rx":"44"
+            }
+        ]
+    }
+}

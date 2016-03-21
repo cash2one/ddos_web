@@ -1,10 +1,10 @@
 {% extends "ace_base/main_base.html" %}
 
-{% block domain_active_open %}
+{% block all_traffic_active %}
 class="active open"
 {% end %}
 
-{% block day_detail_action %}
+{% block all_traffic_day_action %}
 class="active"
 {% end %}
 
@@ -28,7 +28,15 @@ class="active"
 						<td><a href="/all_traffic/day" class="btn btn-primary">每日统计</a></td>
 						<td><strong>日期</strong></td>
 						<td>
-						<input class="form-control" type="text" id="search_sip" name="search_sip" value=""/>
+						<!-- <input class="form-control" type="text" id="search_sip" name="search_sip" value=""/> -->
+							<div class="col-xs-8 col-sm-6">
+								<div class="input-group">
+									<input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
+									<span class="input-group-addon">
+										<i class="fa fa-calendar bigger-110"></i>
+									</span>
+								</div>
+							</div>
 						<!-- <input type="hidden" value="1" name="page" />
 						<input type="hidden" value="" name="search_dip" /> -->
 						</td>
@@ -97,10 +105,76 @@ class="active"
 
 {% end %}
 
+
+{% block plugin_scripts %}
+	<script src="{{ static_url("js/echarts.min.js") }}"></script>
+	<script src="{{ static_url("js/jquery-ui.custom.min.js") }}"></script>
+	<script src="{{ static_url("js/jquery.ui.touch-punch.min.js") }}"></script>
+	<script src="{{ static_url("js/chosen.jquery.min.js") }}"></script>
+	<script src="{{ static_url("js/fuelux.spinner.min.js") }}"></script>
+	<script src="{{ static_url("js/bootstrap-datepicker.min.js") }}"></script>
+	<script src="{{ static_url("js/bootstrap-timepicker.min.js") }}"></script>
+	<script src="{{ static_url("js/moment.min.js") }}"></script>
+	<script src="{{ static_url("js/daterangepicker.min.js") }}"></script>
+	<script src="{{ static_url("js/bootstrap-datetimepicker.min.js") }}"></script>
+	<script src="{{ static_url("js/bootstrap-colorpicker.min.js") }}"></script>
+	<script src="{{ static_url("js/jquery.knob.min.js") }}"></script>
+	<script src="{{ static_url("js/jquery.autosize.min.js") }}"></script>
+	<script src="{{ static_url("js/jquery.inputlimiter.1.3.1.min.js") }}"></script>
+	<script src="{{ static_url("js/jquery.maskedinput.min.js") }}"></script>
+	<script src="{{ static_url("js/bootstrap-tag.min.js") }}"></script>
+{% end %}
+
+
 {% block ln_js_body %}
 
 <script type="text/javascript">
+	//datepicker plugin
+	//link
+	jQuery(function($) {
+		$('.date-picker').datepicker({
+			autoclose: true,
+			todayHighlight: true
+		})
+		//show datepicker when clicking on the icon
+		.next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
 
+		//or change it into a date range picker
+		$('.input-daterange').datepicker({autoclose:true});
+
+
+		//to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+		$('input[name=date-range-picker]').daterangepicker({
+			'applyClass' : 'btn-sm btn-success',
+			'cancelClass' : 'btn-sm btn-default',
+			locale: {
+				applyLabel: 'Apply',
+				cancelLabel: 'Cancel',
+			}
+		})
+		.prev().on(ace.click_event, function(){
+			$(this).next().focus();
+		});
+
+
+		$('#timepicker1').timepicker({
+			minuteStep: 1,
+			showSeconds: true,
+			showMeridian: false
+		}).next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+		
+		$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+	});
 </script>
 
 {% end %}
+
+
+
+

@@ -1,0 +1,85 @@
+{% extends "ace_base/main_base.html" %}
+
+{% block all_traffic_active %}
+class="active open"
+{% end %}
+
+{% block all_traffic_current_action %}
+class="active"
+{% end %}
+
+{% block head_tree %}
+<li>
+	<a href="#">每日详情</a>
+</li>
+<li class="active">
+	每日详情
+</li>
+{% end %}
+
+{% block page_content %}
+<div class="page-content">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="widget-box transparent">
+			<div class="widget-header widget-header-flat">
+				<h4 class="lighter"><i class="icon-signal orange"></i> 流量统计 </h4>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main padding-4">
+					<!-- <div id="sales-charts"></div> -->
+					<div id="main" style="height:350px"></div>
+				</div><!-- /widget-main -->
+			</div><!-- /widget-body -->
+		</div><!-- /widget-box -->
+	</div>
+</div>
+
+</div><!-- /.page-content -->
+
+{% end %}
+
+{% block plugin_scripts %}
+	<script src="{{ static_url("js/echarts.min.js") }}"></script>
+{% end %}
+
+{% block ln_js_body %}
+ <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+		    tooltip : {
+		        formatter: "{a} <br/>{b} : {c}%"
+		    },
+		    toolbox: {
+		        feature: {
+		            restore: {},
+		            saveAsImage: {}
+		        }
+		    },
+		    series: [
+		        {
+		            name: '业务指标',
+		            type: 'gauge',
+		            detail: {formatter:'{value}%'},
+		            data: [{value: 50, name: '完成率'}]
+		        }
+		    ]
+		};
+		// myChart.showLoading();
+		// clearInterval(app.timeTicket);
+		setInterval(function () {
+		    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+		    myChart.setOption(option);
+		},2000);
+		myChart.hideLoading();
+		// myChart.setOption(...);
+		// option.series[0].data[0].value = (Math.random() * 100).toFixed(2)
+  //       // 使用刚指定的配置项和数据显示图表。
+    	// myChart.setOption(option);
+</script>
+
+{% end %}
