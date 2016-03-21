@@ -1,6 +1,7 @@
 from libs.base_handler import BaseHandler
 import hashlib
 import tornado
+from libs import log
 
 class LoginHandler(BaseHandler):
     def get(self):
@@ -10,6 +11,10 @@ class LoginHandler(BaseHandler):
     def post(self):
         name = self.get_argument("loginname")
         passwd = self.get_argument("logpasswd")
+
+        if not name or not passwd:
+            self.render("../apps/login/templates/login.html",error="user or passwd is null!")
+            return
 
         uri = "/login"
         method = "POST"
@@ -24,7 +29,9 @@ class LoginHandler(BaseHandler):
             return
 
         self.set_secure_cookie("user", self.get_argument("loginname"),expires_days=1)
-        self.redirect("/")
+        
+        # log.info(self.get_argument("next", "/"))
+        self.redirect(self.get_argument("next", "/"))
         
 class LoginOut(BaseHandler):
     def get(self):

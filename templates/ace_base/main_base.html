@@ -41,7 +41,7 @@
 				</button>
 
 				<div class="navbar-header pull-left">
-					<a href="#" class="navbar-brand"> <small> <i class="fa fa-cloud"></i>智能防火墙——数据通信科学技术研究所</small> </a><!-- /.brand -->
+					<a href="#" class="navbar-brand"> <small> <i class="fa fa-cloud"></i>流量分析</small> </a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
 
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
@@ -61,8 +61,8 @@
 						</ul>
 						</li> -->
 
-						<li class="purple">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-bell icon-animated-bell"></i> <!-- <span class="badge badge-important">3</span> --> </a>
+						<!-- <li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-bell icon-animated-bell"></i> <span class="badge badge-important">3</span> </a>
 
 							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
@@ -74,10 +74,10 @@
 									<a href="log_ddos?page=1&search_sip=&search_dip="> 查看所有攻击日志 <i class="ace-icon fa fa-arrow-right"></i> </a>
 								</li>
 							</ul>
-						</li>
+						</li> -->
 
 						<li class="green">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-envelope icon-animated-vertical"></i> <!-- <span class="badge badge-success">2</span> --> </a>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-envelope icon-animated-vertical"></i> <span class="badge badge-success">2</span> </a>
 
 							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
@@ -157,7 +157,7 @@
 						<b class="arrow"></b>
 					</li>
 
-					<li {% block state_active_open %}{% end %} >
+					<!-- <li {% block state_active_open %}{% end %} >
 						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-desktop"></i> <span class="menu-text">状态监控</span> <b class="arrow fa fa-angle-down"></b> </a>
 						<b class="arrow"></b>
 						<ul class="submenu">
@@ -233,28 +233,28 @@
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 
 					<li {% block domain_active_open %}{% end %}>
 						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-globe"></i> <span class="menu-text"> 域名管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
 						<b class="arrow"></b>
 						<ul class="submenu">
 							<li {% block black_domain_action %}{% end %}>
-								<a href="domain_black_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 域名黑名单 </a>
+								<a href="/domain/domain_black_list"> <i class="menu-icon fa fa-caret-right"></i> 域名黑名单 </a>
 								<b class="arrow"></b>
 							</li>
 							<li {% block white_domain_action %}{% end %}>
-								<a href="domain_white_list?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 域名白名单 </a>
+								<a href="domain_white_list"> <i class="menu-icon fa fa-caret-right"></i> 域名白名单 </a>
 								<b class="arrow"></b>
 							</li>
 							<li {% block domain_conf_action %}{% end %}>
-								<a href="domain_conf?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 域名过滤设置 </a>
+								<a href="/domain/conf"> <i class="menu-icon fa fa-caret-right"></i> 域名过滤设置 </a>
 								<b class="arrow"></b>
 							</li>
 						</ul>
 					</li>
 
-					<li {% block system_active_open %}{% end %}>
+					<!-- <li {% block system_active_open %}{% end %}>
 						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-cogs"></i> <span class="menu-text"> 系统配置 </span> <b class="arrow fa fa-angle-down"></b> </a>
 						<b class="arrow"></b>
 						<ul class="submenu">
@@ -292,16 +292,13 @@
 								<a href="log_opt?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 操作日志 </a>
 								<b class="arrow"></b>
 							</li>
-							<!-- <li {% block sys_log_action %}{% end %}>
-								<a href="log_system?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 设备状态日志 </a>
-								<b class="arrow"></b>
-							</li> -->
+
 							<li {% block login_log_action %}{% end %}>
 								<a href="log_login?page=1&search_sip=&search_dip="> <i class="menu-icon fa fa-caret-right"></i> 登陆日志 </a>
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 
 					<li {% block user_active_open %}{% end %}>
 						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-users"></i> <span class="menu-text"> 用户管理 </span> <b class="arrow fa fa-angle-down"></b> </a>

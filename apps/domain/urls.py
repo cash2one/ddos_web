@@ -1,15 +1,12 @@
 import tornado.web
 from code.views import DomainBlackList
-
+from code.views import DomainWhiteList
+from code.views import DomainConf
 
 urls_perfix = "/domain"
 
 urls_suffix = [
-    # (r'/', IndexHandler),
     (r'/domain_black_list', DomainBlackList),
-    # (r'/home', IndexHandler),
-    # (r'/', IndexHandler),
-    # "/", IndexHandler,
+    (r'/domain_white_list', DomainWhiteList),
+    (r'/conf', DomainConf),
 ]
-
-# print "in-demo-url:",urls_suffix,type(urls_suffix)

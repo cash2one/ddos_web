@@ -1,0 +1,20 @@
+{
+    "code":0,
+    "data":{
+        "domain_black_list":[
+            {
+                "id":1,
+               "domain":"www.w1.com",
+                "whoadd":"admin1",
+                "time":"2016-01-01 15:30:66" 
+            },
+            {
+                "id":2,
+               "domain":"www.w1.com",
+                "whoadd":"admin1",
+                "time":"2016-01-02 15:30:66" 
+            }
+        ],
+        "total":2
+    }
+}

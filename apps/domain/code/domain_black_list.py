@@ -2,33 +2,33 @@
 #coding:utf-8
 from libs.base_handler import BaseHandler
 import tornado
+from libs import log
 
-class domain_black_listHandler(BaseHandler):
+class DomainBlackList(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        page = int(self.get_argument("page", "1"))
-        per_page = int(self.get_argument("per_page", "10"))
-        search_sip = self.get_argument("search_sip","")
-        search_dip = self.get_argument("search_dip","")
+        view_args = {}
+        view_args["page"] = int(self.get_argument("page", "1"))
+        view_args["per_page"] = int(self.get_argument("per_page", "10"))
+        view_args["search_sip"] = self.get_argument("search_sip","")
+        view_args["search_dip"] = self.get_argument("search_dip","")
 
         uri = "/domain/black_list"
         args = {
                 "condition":{
-                        "sip":search_sip,
-                        "dip":search_dip,
-                        "page":page,
-                        "per_page":per_page
+                        "sip":view_args["search_sip"],
+                        "dip":view_args["search_sip"],
+                        "page":view_args["page"],
+                        "per_page":view_args["per_page"]
                 }
         }
 
-        res = self.get_api_result(uri, method, args)
-        if res.get("code") != 0:
-            self.render("errors.html",error="%s" % res.get("msg"))
-            return
+        res = self.get_api_result(uri, args=args)
+        
+        view_args["count"] = res.get("data",{}).get("total", "")/view_args["per_page"] + 1
+        view_args["entries"]  = res.get("data",{}).get("domain_black_list", "")
+        self.render("../apps/domain/templates/domain_black_list.html",**view_args)
 
-        sums = 0
-        entries = []
-        self.render("../apps/domain/templates/domain_black_list.html", entries=entries,page = page,count=sums,search_sip=search_sip,search_dip=search_dip)
         
 # class domain_black_listsearchHandler(BaseHandler):
 #     def get(self):

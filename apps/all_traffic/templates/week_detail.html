@@ -1,0 +1,106 @@
+{% extends "ace_base/main_base.html" %}
+
+{% block domain_active_open %}
+class="active open"
+{% end %}
+
+{% block day_detail_action %}
+class="active"
+{% end %}
+
+{% block head_tree %}
+<li>
+	<a href="#">每日详情</a>
+</li>
+<li class="active">
+	每日详情
+</li>
+{% end %}
+
+{% block page_content %}
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-9">
+			<form method="get" action="/domain_black_list_search">
+				<table class="table">
+
+					<tr>
+						<td><a href="/all_traffic/day" class="btn btn-primary">每日统计</a></td>
+						<td><strong>日期</strong></td>
+						<td>
+						<input class="form-control" type="text" id="search_sip" name="search_sip" value=""/>
+						<!-- <input type="hidden" value="1" name="page" />
+						<input type="hidden" value="" name="search_dip" /> -->
+						</td>
+						<td>
+						<input class="btn btn-primary" type="submit" value="查询" />
+						</td>
+
+					</tr>
+				</table>
+			</form>
+		</div><!-- /.page-header -->
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="table-responsive">
+						<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>时间段</th>
+									<th>上行均值(Kbps)</th>
+									<th>下行均值(Kbps)</th>
+									<th>上行最大值(Kbps)</th>
+									<th>下行最大值(Kbps)</th>
+									<th>上行最小值(Kbps)</th>
+									<th>下行行最小值(Kbps)</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% set  c = 0 %}
+								{% for entrie in entries %}
+								<tr>
+									<td>{{c = c + 1}}</td>
+									<td>{{entrie["time_field"]}}</td>
+									<td>{{entrie["ave_tx"]}}</td>
+									<td>{{entrie["ave_rx"]}}</td>
+									<td>{{entrie["max_tx"]}}</td>
+									<td>{{entrie["max_rx"]}}</td>
+									<td>{{entrie["min_tx"]}}</td>
+									<td>{{entrie["min_rx"]}}</td>
+								</tr>
+								{% end %}
+
+								{% if len(entries) == 0 %}
+								<tr>
+									<td colspan="15" align="center">暂无数据</td>
+								</tr>
+								{% end %}
+
+							</tbody>
+						</table>
+
+						
+					</div><!-- /.table-responsive -->
+				</div><!-- /span -->
+			</div><!-- /row -->
+
+			<!-- PAGE CONTENT ENDS -->
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+{% end %}
+
+{% block ln_js_body %}
+
+<script type="text/javascript">
+
+</script>
+
+{% end %}

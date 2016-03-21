@@ -12,7 +12,9 @@ log.set_logger(level = 'DEBUG:INFO')
 class RealBaseHandler(tornado.web.RequestHandler):
     @property
     def user_name(self):
-        return tornado.escape.xhtml_escape(self.current_user)
+        if self.current_user:
+            return tornado.escape.xhtml_escape(self.current_user)
+        return ""
 
     def get_current_user(self):
         return self.get_secure_cookie("user")
@@ -36,20 +38,24 @@ class RealBaseHandler(tornado.web.RequestHandler):
             "msg":"sth error!"
         }
         raise tornado.gen.Return(data)
-    # def get_template_path(self):
-    #     pass
+
+    def render_or_api_result(self,uri, method="GET", args=None):
+        data = self.get_api_result(uri, method, args)
+        code = data.get("code")
+        if code == 0:
+            return data
+        self.render("ace_base/errors.html",errors="%s" % data.get("msg"))
+
+
     def render(self, template_name, where=SELF_TEMPLATES, **kwargs):
         
         if not kwargs.has_key("name"):
+            # if self.user_name:
             kwargs["name"] = self.user_name
 
         if where == SELF_TEMPLATES:
             template_name = template_name
-            # template_path = self.__module__.replace('')
-        # print locals()
-        # print [(name, getattr(self, name)) for name in dir(self)]
-        # print vars(self)
-        # print self.__module__
+
         super(RealBaseHandler,self).render(template_name,**kwargs)
 
 class DebugBaseHandler(RealBaseHandler):
@@ -61,11 +67,12 @@ class DebugBaseHandler(RealBaseHandler):
             with open("%s/%s_%s.json"%(self.api_path,uri,method), "r") as f:
                 data = json.loads(f.read())
 
-        except:
+        except Exception as e:
             data = {
                 "code":1,
-                "msg":"sth error!"
+                "msg":"sth error: %s" % e
             }
+        
         return data
-
+    
 BaseHandler = DebugBaseHandler

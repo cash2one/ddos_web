@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "ace_base/main_base.html" %}
 
 {% block domain_active_open %}
 class="active open"
@@ -23,7 +23,7 @@ class="active"
 		<div class="col-xs-6">
 			<table class="table">
 				<tr>
-					<td><a href="domain_conf?type=0&page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}" class="btn btn-primary">域名过滤设置</a></td>
+					<td><a href="domain_conf" class="btn btn-primary">域名过滤设置</a></td>
 				</tr>
 			</table>
 		</div><!-- /.page-header -->
@@ -32,13 +32,13 @@ class="active"
 		<div class="col-xs-8">
 			<!-- PAGE CONTENT BEGINS -->
 
-			<form method="post" action="/domain_conf?page={{page}}&search_sip={{search_sip}}&search_dip={{search_dip}}">
+			<form method="post" action="#">
 				<table class="table table-condensed table-hover">
 					<tr>
 						<td>阻断提示信息：</td>
 						<td>
-						<input type="hidden" name="id" value="{{entries[0]['id']}}" />
-						<textarea class="autosize-transition form-control" name="block_prompt" >{{entries[0]['block_prompt']}}</textarea>
+						
+						<textarea class="autosize-transition form-control" name="block_prompt" >{{ block_prompt }}</textarea>
 
 						</td>
 
@@ -46,19 +46,19 @@ class="active"
 					<tr>
 						<td>阻断信息是否生效：</td>
 						<td>
-						<input type="checkbox" name="prompt_enable"  {% if entries[0]['prompt_enable'] == 'on' %} checked="checked" {% end %}>
+						<input type="checkbox" name="prompt_enable"  {% if prompt_enable == 'on' %} checked="checked" {% end %}>
 						</td>
 					</tr>
 					<tr>
 						<td>黑名单模式：</td>
 						<td>
-						<input type="radio" name="match_mode"  value = "black" {% if entries[0]['match_mode'] == 'black' %} checked="checked" {% end %}>
+						<input type="radio" name="match_mode"  value = "black" {% if match_mode == 'black' %} checked="checked" {% end %}>
 						</td>
 					</tr>
 					<tr>
 						<td>白名单模式：</td>
 						<td>
-						<input type="radio" name="match_mode" value = "white" {% if entries[0]['match_mode'] == 'white' %} checked="checked" {% end %}>
+						<input type="radio" name="match_mode" value = "white" {% if  match_mode == 'white' %} checked="checked" {% end %}>
 						</td>
 
 					</tr>
